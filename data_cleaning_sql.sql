@@ -24,7 +24,7 @@ SELECT company, industry, total_laid_off,`date`,
 			PARTITION BY company, industry, total_laid_off,`date`) AS row_num
 FROM world_layoffs.layoffs_staging;
 
--- using the above query, created a CTE for finding duplicates
+-- Using the above query, created a CTE for finding duplicates
 -- above query had returned some legitimate rows as well, to fix it we will use all the columns in the table 
 -- these are our real duplicates 
 SELECT *
@@ -121,7 +121,7 @@ FROM world_layoffs.layoffs_staging2
 WHERE company LIKE 'airbnb%';
 
 -- It looks like airbnb is a travel, but this one just isn't populated.
--- wWrite a query that if there is another row with the same company name, it will update it to the non-null industry values
+-- Write a query that if there is another row with the same company name, it will update it to the non-null industry values
 -- This makes it easy so if there were thousands we wouldn't have to manually check them all
 
 -- Set the blanks to nulls since those are typically easier to work with
@@ -146,7 +146,7 @@ SET t1.industry = t2.industry
 WHERE t1.industry IS NULL
 AND t2.industry IS NOT NULL;
 
--- aCheck it looks like Bally's was the only one without a populated row to populate this null values
+-- Check it looks like Bally's was the only one without a populated row to populate this null values
 SELECT *
 FROM world_layoffs.layoffs_staging2
 WHERE industry IS NULL 
@@ -173,7 +173,7 @@ ORDER BY industry;
 SELECT *
 FROM world_layoffs.layoffs_staging2;
 
--- everything looks good except apparently we have some "United States" and some "United States." with a period at the end. 
+-- Everything looks good except apparently we have some "United States" and some "United States." with a period at the end. 
 SELECT DISTINCT country
 FROM world_layoffs.layoffs_staging2
 ORDER BY country;
